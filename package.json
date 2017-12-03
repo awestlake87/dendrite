@@ -1,0 +1,14 @@
+{
+  "name": "dendrite",
+  "version": "1.0.0",
+  "description": "cortex flow editor",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Andrew J Westlake",
+  "license": "ISC",
+  "dependencies": {
+    "webpack": "^3.9.1"
+  }
+}
