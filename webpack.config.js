@@ -2,8 +2,8 @@ var webpack = require("webpack")
 var path = require("path")
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
 
-var BUILD_DIR = path.resolve(__dirname, "src/client/public")
-var APP_DIR = path.resolve(__dirname, "src/client/app")
+var BUILD_DIR = path.resolve(__dirname, "public")
+var APP_DIR = path.resolve(__dirname, "src/client")
 
 module.exports = {
   entry: [
@@ -13,6 +13,9 @@ module.exports = {
   output: {
     path: BUILD_DIR,
     filename: "bundle.js",
+  },
+  devServer: {
+    contentBase: BUILD_DIR,
   },
   module: {
     loaders: [

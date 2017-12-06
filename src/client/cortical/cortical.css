@@ -1,0 +1,18 @@
+
+.cortical-editor {
+  display: flex;
+  width: 100%;
+  height: 100%;
+
+  flex-direction: row;
+}
+
+.cortical-graph {
+  flex: 1;
+
+  border: 1px solid black;
+}
+
+.cortical-palette {
+  flex: 0 0 200px;
+}

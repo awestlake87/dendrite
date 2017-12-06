@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "test",
-    "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server --hot --inline --history-api-fallback --content-base src/client/public"
+    "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server --hot --inline --history-api-fallback"
   },
   "author": "Andrew J Westlake",
   "license": "ISC",

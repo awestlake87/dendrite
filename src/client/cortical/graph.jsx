@@ -1,17 +1,13 @@
-import styles from "./app.css"
-
 import React, { Component } from "react"
-import { render } from "react-dom"
 
 import autoBind from "autobind-decorator"
-
 import joint from "jointjs"
 
 import { createLobe } from "./lobe"
 
-class Paper extends Component {
+export class Graph extends Component {
   state = {
-    interactive: undefined,
+    element: undefined,
   }
 
   shouldComponentUpdate(next_props, next_state) {
@@ -27,24 +23,24 @@ class Paper extends Component {
   }
 
   @autoBind
-  _onInteractiveRef(elem) {
-    if (elem && elem !== this.state.interactive) {
-      this.setState({ interactive: elem })
+  _onRef(elem) {
+    if (elem && elem !== this.state.element) {
+      this.setState({ element: elem })
     }
   }
 
   componentWillUpdate(next_props, next_state) {
     if (!this.state._graph) {
-      if (next_state.interactive) {
-        this._createGraph(next_state.interactive)
+      if (next_state.element) {
+        this._createGraph(next_state.element)
       }
     }
   }
 
-  _createGraph(interactive) {
+  _createGraph(element) {
     this._graph = new joint.dia.Graph
-    this._interactive_paper = new joint.dia.Paper({
-      el: interactive,
+    this._paper = new joint.dia.Paper({
+      el: element,
       width: "100%",
       height: "100%",
       model: this._graph,
@@ -99,28 +95,13 @@ class Paper extends Component {
     return true
   }
 
+  scale(sx, sy) {
+    this._paper.scale(sx, sy)
+  }
+
   render() {
     return (
-      <div
-        ref={this._onInteractiveRef}
-        style={{
-          border: "1px solid black",
-          width: "100%",
-          height: "100%",
-        }}
-      />
+      <div ref={this._onRef} className={this.props.className} />
     )
   }
 }
-
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <Paper />
-      </div>
-    )
-  }
-}
-
-render(<App />, document.getElementById("app"))
