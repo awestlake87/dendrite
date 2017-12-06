@@ -1,5 +1,6 @@
 var webpack = require("webpack")
 var path = require("path")
+var ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 var BUILD_DIR = path.resolve(__dirname, "src/client/public")
 var APP_DIR = path.resolve(__dirname, "src/client/app")
@@ -16,6 +17,18 @@ module.exports = {
   module: {
     loaders: [
       {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          use: [
+            {
+              loader: "css-loader",
+              options: { importLoaders: 1 },
+            },
+            "postcss-loader"
+          ]
+        })
+      },
+      {
         loader: "babel-loader",
         include: [
           path.resolve(__dirname, "src")
@@ -27,5 +40,9 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  resolve: {
+    extensions: [ ".js", ".jsx", ".json" ]
+  },
+  plugins: [ new ExtractTextPlugin("[name].bundle.css") ]
 }
