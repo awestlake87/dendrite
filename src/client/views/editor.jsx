@@ -14,6 +14,8 @@ export class EditorView extends Component {
             paneClassName="editor-pane"
             split={model.split}
             defaultSize={model.size}
+            minSize={100}
+            maxSize={-100}
           >
             <EditorView model={model.pane1} />
             <EditorView model={model.pane2} />

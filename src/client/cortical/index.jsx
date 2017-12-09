@@ -1,3 +1,3 @@
 
 export { LobePalette } from "./lobe-palette"
-export { Graph } from "./graph"
+export { Graph, GraphView } from "./graph"

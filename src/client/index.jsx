@@ -6,7 +6,7 @@ import { render } from "react-dom"
 import { DragDropContext } from "react-dnd"
 import HTML5Backend from "react-dnd-html5-backend"
 
-import { Graph, LobePalette } from "./cortical"
+import { GraphView, LobePalette } from "./cortical"
 import { EditorView } from "./views"
 
 let model = {
@@ -23,7 +23,7 @@ let model = {
     size: 400,
     pane1: {
       type: "widget",
-      widget: <Graph className="cortical-graph" />
+      widget: <GraphView className="cortical-graph" />
     },
     pane2: {
       type: "widget",

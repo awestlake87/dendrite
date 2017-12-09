@@ -1,8 +1,12 @@
 import React, { Component } from "react"
+import PropTypes from "prop-types"
+
+import { DropTarget } from "react-dnd"
 
 import autoBind from "autobind-decorator"
 import joint from "jointjs"
 
+import { DragTypes, Events } from "../core"
 import { createLobe } from "./lobe"
 
 export class Graph extends Component {
@@ -44,7 +48,8 @@ export class Graph extends Component {
       width: "100%",
       height: "100%",
       model: this._graph,
-      gridSize: 1,
+      gridSize: 10,
+      drawGrid: "fixedDot",
       validateConnection: this._validateConnection,
       snapLinks: { radius: 50 },
       markAvailable: true,
@@ -56,7 +61,7 @@ export class Graph extends Component {
       })
     })
 
-    let budgeter = new createLobe({
+    let budgeter = createLobe({
       name: "Budgeter",
       req_inputs: [ "FrameData" ],
       outputs: [ "Budget", "ResourceClusters" ],
@@ -99,9 +104,79 @@ export class Graph extends Component {
     this._paper.scale(sx, sy)
   }
 
+  addCell(cell) {
+    this._graph.addCell(cell)
+  }
+
   render() {
     return (
       <div ref={this._onRef} className={this.props.className} />
+    )
+  }
+}
+
+@DropTarget(
+  DragTypes.LOBE_PALETTE_LOBE,
+  {
+    canDrop(props) {
+      return true
+    },
+    drop(props) {
+      Events.addLobe()
+    }
+  },
+ (connect, monitor) => ({
+   connectDropTarget: connect.dropTarget(),
+   isOver: monitor.isOver(),
+   canDrop: monitor.canDrop(),
+   dropResult: monitor.getClientOffset(),
+ })
+)
+export class GraphView extends Component {
+  _subs = { }
+  state = {
+    graph: undefined
+  }
+
+  @autoBind
+  _onGraphRef(graph) {
+    if (graph && graph !== this.state.graph) {
+      this.setState({ graph })
+    }
+  }
+
+  @autoBind
+  _addLobe() {
+    this.state.graph.addCell(
+      createLobe({
+        name: "Budgeter",
+        req_inputs: [ "FrameData" ],
+        outputs: [ "Budget", "ResourceClusters" ],
+        pos: { x: 50, y: 50 },
+        dim: { w: 150, h: 150 },
+      })
+    )
+  }
+
+  componentWillMount() {
+    this._subs = {
+      addLobe: Events.addLobe.subscribe(this._addLobe)
+    }
+  }
+
+  componentWillUnmount() {
+    for (var i in this._subs) {
+      this._subs[i].unsubscribe()
+    }
+  }
+
+  render() {
+    let { connectDropTarget, isOver, canDrop, className } = this.props
+
+    return connectDropTarget(
+      <div className="fill">
+        <Graph ref={this._onGraphRef} className={className} />
+      </div>
     )
   }
 }

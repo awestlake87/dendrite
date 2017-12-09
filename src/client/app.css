@@ -26,3 +26,8 @@ main {
 
   flex-direction: row;
 }
+
+.fill {
+  flex: 1 1 auto;
+  display: flex;
+}
