@@ -38,8 +38,10 @@ module.exports = {
         ],
         test: /\.jsx?$/,
         query: {
-          plugins: [ "transform-decorators-legacy", "transform-runtime" ],
-          presets: [ "es2015", "stage-0", "react" ]
+          plugins: [
+            "transform-decorators-legacy", "transform-class-properties"
+          ],
+          presets: [ "env", "react" ]
         }
       }
     ]

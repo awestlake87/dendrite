@@ -3,11 +3,39 @@ import styles from "./app.css"
 import React, { Component } from "react"
 import { render } from "react-dom"
 
-import { Editor } from "./cortical"
+import { DragDropContext } from "react-dnd"
+import HTML5Backend from "react-dnd-html5-backend"
 
+import { Graph, LobePalette } from "./cortical"
+import { EditorView } from "./views"
+
+let model = {
+  type: "split",
+  split: "vertical",
+  size: 200,
+  pane1: {
+    type: "widget",
+    widget: <LobePalette />
+  },
+  pane2: {
+    type: "split",
+    split: "horizontal",
+    size: 400,
+    pane1: {
+      type: "widget",
+      widget: <Graph className="cortical-graph" />
+    },
+    pane2: {
+      type: "widget",
+      widget: <div />
+    }
+  }
+}
+
+@DragDropContext(HTML5Backend)
 class App extends Component {
   render() {
-    return <Editor />
+    return <EditorView model={model} />
   }
 }
 

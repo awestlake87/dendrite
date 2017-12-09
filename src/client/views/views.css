@@ -1,0 +1,13 @@
+
+.widget-view {
+  flex: 1 1 400px;
+  display: flex;
+}
+
+.partition-view {
+  flex: 1 1 auto;
+}
+
+.pane-view {
+  display: flex;
+}

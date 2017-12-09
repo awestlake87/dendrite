@@ -1,3 +1,3 @@
 
-export { Editor } from "./editor"
+export { LobePalette } from "./lobe-palette"
 export { Graph } from "./graph"
